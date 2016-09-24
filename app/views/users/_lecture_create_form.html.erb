@@ -1,0 +1,32 @@
+<div class="login-box">
+
+  <h2>Create Lecture</h2>
+
+ 	<%= form_for(@lecture, url: lectures_path, html: { method: :post }) do |f| %>
+
+   	<div class="field">
+     	<%= f.label :subject, "제목" %><br />
+     	<%= f.text_field :subject, autofocus: true %>
+   	</div>
+
+   	<div class="field">
+     	<%= f.label :teacher, "강사" %><br />
+     	<%= f.text_field :teacher, autofocus: true %>
+   	</div>
+
+   <div class="field">
+     <%= f.label :content, "내용" %>
+     <%= f.text_area :content, autofocus: true %>
+   </div>
+
+   <div class="field">
+     <%= f.label :timeinfo, "시간" %><br />
+     <%= f.text_field :timeinfo, autofocus: true, placeholder: "YYYY-MM-DD 오전/오후 XX시" %>
+   </div>
+
+   <div class="actions">
+     <%= f.submit "강의 생성" %>
+   </div>
+
+  <% end %>
+</div>

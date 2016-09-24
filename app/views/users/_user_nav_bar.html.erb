@@ -1,0 +1,9 @@
+<ul>
+	<% if current_user.admin? %>
+		<li><%= link_to "회원 리스트", users_path %></li>
+	<% end %>
+  <li><%= link_to "회원정보 수정", edit_user_path(@user) %></li>
+  <li><%= link_to "My Lectures", lectures_user_path(@user) %></li>
+  <li><%= link_to "My 언어교환", '#' %></li>
+  <li><%= link_to "My 단어장", quizzes_user_path(@user) %></li>
+</ul>

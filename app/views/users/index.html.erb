@@ -1,0 +1,28 @@
+<% content_for :user_nav do %>
+	<% render 'user_nav_bar.html.erb' %>
+<% end %>
+
+<% content_for :profile_content do %>
+	<h1>회원 리스트</h1>
+
+	<%= will_paginate %>
+
+	<ul class="users">
+  	<% @users.each do |user| %>
+    	<li>
+      	<% if user.image? %>
+          <%= image_tag(user.image, size: 50) %>
+        <% else %>
+          <%= image_tag("swimming_pool.png", size: 50) %>
+        <% end %>
+      	<%= link_to user.name, user %>
+        <% if current_user.admin? %>
+           | <%= link_to "delete", user, method: :delete, data: 
+                                { confirm: "You sure?" } %>
+        <% end %>
+    	</li>
+  	<% end %>
+	</ul>
+
+	<%= will_paginate %>
+<% end %>

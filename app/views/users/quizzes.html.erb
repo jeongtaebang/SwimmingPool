@@ -1,0 +1,70 @@
+<% content_for :user_nav do %>
+	<%= render 'user_nav_bar' %>
+<% end %>
+
+<% content_for :profile_content do %>
+	<ul class="quizzes">
+		<% if current_user.admin? || current_user == @user %>
+			<% @quizzes.each do |quiz| %>
+				<li class="quizzes-index" id=<%= "quiz_#{quiz.id}" %>>
+					<%= quiz.word %> 
+					      <span class="pull-right">
+					      | <%= link_to "x", quiz_path(quiz), method: :delete, data: 
+                                { confirm: "정말 삭제 하시겠습니까?" } %>
+                                </span>
+				</li>
+			<% end %>
+			<li id="add-quizlet" class="quizzes-index">
+				<span id="add-quiz" class="glyphicon glyphicon-plus-sign"></span>
+			</li>
+
+			<!-- Modal form: quiz creation -->
+			<section id="modal-add-quiz" class="modal fade">
+				<div class="modal-body">
+					<%= form_for(@quiz, url: quizzes_path, html: {method: :post}, remote: true) do |f| %>
+
+						<div class="quiz-hidden-field">
+							<%= f.hidden_field :user_id, :value => @user.id %>
+						</div>
+
+						<div class="quiz-word-field">
+     					<%= f.label :word, "단어" %><br />
+     					<%= f.text_field :word, autofocus: true %>
+   					</div>
+
+   					<div class="quiz-definition-field">
+     					<%= f.label :definition, "뜻" %><br />
+     					<%= f.text_area :definition, autofocus: true %>
+   					</div>
+
+   					<div class="actions btn-create-quizlet">
+     					<%= f.submit "단어 생성" %>
+  					</div>
+  				<% end %><!-- form end -->
+				</div><!-- Modal body div -->
+			</section><!-- Modal section -->
+			
+			<!-- Prepare modal definition for each quiz -->
+			<% @quizzes.each do |quiz| %>
+				<section id= <%= "modal-show-quiz-#{quiz.id}-definition" %> class="modal-definition modal fade">
+					<div class="modal-body modal-definition-quiz">
+						<p><%= quiz.definition %></p>
+					</div>
+				</section><!-- modal section -->
+			<% end %><!-- enum loop end -->
+		<% end %>
+	</ul>
+
+	<script>
+		$(document).ready(function(){
+			$("#add-quiz").on('click', function(){
+				$("#modal-add-quiz").modal({ show:true });
+			});
+			<% @quizzes.each do |quiz| %>
+				$("<%= "#quiz_#{quiz.id}" %>").on('click', function(){
+					$("<%= "#modal-show-quiz-#{quiz.id}-definition" %>").modal({ show:true });
+				});
+			<% end %>
+		});
+	</script>
+<% end %>

@@ -1,0 +1,13 @@
+<div class="carousel-caption">
+  <h2><%= @lectures.second.subject %></h2>
+  <h3><%= @lectures.second.timeinfo %></h3>
+  <p><%= @lectures.second.content %></p>
+  <% if !current_user.nil? %>
+    <% if !current_user.lectures.find_by(id: 2).nil? %>
+      <%= button_to "수강 취소", { action: "destroy", controller: "enrollments", user_id: current_user.id, lecture_id: @lectures.second.id }, method: :delete %>
+    <% else %>
+      <%= button_to "수강 신청", { action: "create", controller: "enrollments", user_id: current_user.id, 
+                                                                        lecture_id: @lectures.second.id }, method: :post %>
+    <% end %>
+  <% end %>
+</div>

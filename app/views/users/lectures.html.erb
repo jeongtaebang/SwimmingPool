@@ -1,0 +1,24 @@
+<% content_for :user_nav do %>
+	<%= render 'user_nav_bar' %>
+<% end %>
+
+<% content_for :profile_content do %>
+	<ul class="lectures">
+		<% if current_user.admin? %>
+			<% @allectures.each do |lecture| %>
+				<li class="lectures-all">
+					<%= lecture.subject %>  |  <%= lecture.timeinfo %>
+					  |  <%= link_to "delete", { action: "destroy", controller: "lectures", id: lecture.id }, method: :delete, data: { confirm: "You sure?" } %>
+				</li>
+			<% end %>
+			<%= render 'lecture_create_form' %>
+		<% else %>
+			<% @lectures.each do |lecture| %>
+				<li class="lectures-user">
+					<%= lecture.subject %>  |  <%= lecture.timeinfo %>
+					 |  <%= link_to "수강 취소", { action: "destroy", controller: "enrollments", user_id: current_user.id, lecture_id: lecture.id }, method: :delete %>
+				</li>
+			<% end %>
+		<%end %>
+	</ul>
+<% end %>

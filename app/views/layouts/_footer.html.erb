@@ -1,0 +1,48 @@
+<div class="footer">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-xs-3 col-md-3 col-xs-offset-1 col-md-offset-1">
+				<div id="map"></div>
+			</div>
+
+			<div class="col-xs-1 col-md-1 col-xs-offset-6 col-md-offset-6">
+				<ul class="external-links">
+					<br/>
+					<li>
+						<a href='#'><%= image_tag "/assets/naver_blog.png", size: '30x30' %></a>
+					</li>
+					<br/>
+					<li>
+						<a href='#'><%= image_tag "/assets/instagram.jpg", size: '30x30', style:'border-radius:5px' %></a>
+					</li>
+					<br/>
+					<li>
+						<a href='#'><%= image_tag "/assets/facebook_icon.png", size: '15x30' %></a>
+					</li>
+					<br/>
+				</ul>
+			</div>
+
+		</div><!-- row div -->
+	</div><!-- container div -->
+</div>
+
+	<!-- Google Map Javascript API: get your own API key -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCX-xr_AQep1KBtHS--fE9QL497nmzLkTI&callback=initMap"
+    async defer></script>                                    <!-- API                         key-->
+    <script>
+      var map;
+      function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: 37.557235, lng: 126.943551},
+          zoom: 16
+        });
+        //map marker
+        var myLatlng = new google.maps.LatLng(37.557235, 126.943551);
+        var marker = new google.maps.Marker({
+          position: myLatlng,
+          map: map,
+          title: 'Hello World!'
+        });
+      }
+    </script>
